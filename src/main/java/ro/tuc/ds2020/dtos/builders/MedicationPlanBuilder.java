@@ -1,16 +1,12 @@
 package ro.tuc.ds2020.dtos.builders;
 
-import ro.tuc.ds2020.dtos.MedicationDTO;
 import ro.tuc.ds2020.dtos.MedicationPlanDTO;
 import ro.tuc.ds2020.dtos.MedicationPlanDetailsDTO;
 import ro.tuc.ds2020.entities.Medication;
 import ro.tuc.ds2020.entities.MedicationPlan;
 import ro.tuc.ds2020.entities.Patient;
-import ro.tuc.ds2020.entities.Person;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class MedicationPlanBuilder {
