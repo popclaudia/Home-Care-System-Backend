@@ -12,7 +12,7 @@ public interface MedicationRepository extends JpaRepository<Medication, Integer>
 
     @Query(value = "SELECT p " +
             "FROM Medication p " +
-            "JOIN FETCH p.medication_plans c "+
+            "left JOIN FETCH p.medication_plans c "+
             "WHERE p.id = :id ")
     Optional<Medication> findMedicationById(@Param("id") Integer id);
 

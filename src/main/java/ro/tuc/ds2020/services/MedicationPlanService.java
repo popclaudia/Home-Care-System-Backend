@@ -47,11 +47,11 @@ public class MedicationPlanService {
             throw new ResourceNotFoundException(Patient.class.getSimpleName() + " with id: " + medicationPlanDTO.getPatient());
         }
         Set<Medication> medication=new HashSet<Medication>();
-        if(medicationPlanDTO.getMedication()!=null)
-        for(Integer i: medicationPlanDTO.getMedication()) {
-            Optional<Medication> medicationOptional = medicationRepository.findById(i);
-            medication.add(medicationOptional.get());
-        }
+        if(medicationPlanDTO.getMedication().size()>0)
+            for(Integer i: medicationPlanDTO.getMedication()) {
+                Optional<Medication> medicationOptional = medicationRepository.findById(i);
+                medication.add(medicationOptional.get());
+            }
         Patient patient = prosumerOptional.get();
         MedicationPlan medicationPlan = MedicationPlanBuilder.toEntity(medicationPlanDTO, patient);
         medicationPlan.setMedication(medication);

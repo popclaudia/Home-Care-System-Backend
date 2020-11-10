@@ -24,7 +24,9 @@ public class PatientDTO extends RepresentationModel<PatientDTO> {
 
     private Integer caregiver;
 
-    public PatientDTO(Integer id, String name, Date birthdate, String gender, String address, String medical_record, Integer caregiver) {
+    private String caregivername;
+
+    public PatientDTO(Integer id, String name, Date birthdate, String gender, String address, String medical_record, Integer caregiver, String caregivername) {
         this.id = id;
         this.name = name;
         this.birthdate = birthdate;
@@ -32,6 +34,7 @@ public class PatientDTO extends RepresentationModel<PatientDTO> {
         this.address = address;
         this.medical_record = medical_record;
         this.caregiver=caregiver;
+        this.caregivername=caregivername;
     }
 
     public Integer getId() {
@@ -88,6 +91,14 @@ public class PatientDTO extends RepresentationModel<PatientDTO> {
 
     public void setCaregiver(Integer caregiver) {
         this.caregiver = caregiver;
+    }
+
+    public String getCaregivername() {
+        return caregivername;
+    }
+
+    public void setCaregivername(String caregivername) {
+        this.caregivername = caregivername;
     }
 
     @Override

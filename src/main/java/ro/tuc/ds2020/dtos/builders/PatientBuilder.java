@@ -11,9 +11,12 @@ public class PatientBuilder {
 
     public static PatientDTO toPatientDTO(Patient patient) {
         Integer caregiver=null;
-        if(patient.getCaregiver()!=null)
-            caregiver=patient.getCaregiver().getID();
-        return new PatientDTO(patient.getID(), patient.getName(), patient.getBirth_date(), patient.getGender(), patient.getAddress(), patient.getMedical_record(), caregiver);
+        String caregivername=null;
+        if(patient.getCaregiver()!=null) {
+            caregivername = patient.getCaregiver().getName();
+            caregiver = patient.getCaregiver().getID();
+        }
+        return new PatientDTO(patient.getID(), patient.getName(), patient.getBirth_date(), patient.getGender(), patient.getAddress(), patient.getMedical_record(), caregiver, caregivername);
     }
 
     public static Patient toEntity(PatientDTO patient, CareGiver caregiver) {

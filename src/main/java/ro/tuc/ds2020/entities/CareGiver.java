@@ -45,4 +45,5 @@ public class CareGiver extends User implements Serializable {
         super(name, birth_date, gender, address);
 
     }
+
 }

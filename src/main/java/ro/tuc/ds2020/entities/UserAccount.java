@@ -22,7 +22,7 @@ public class UserAccount implements Serializable {
     @Column(updatable = false)
     private String password;
 
-    @OneToOne( fetch = FetchType.LAZY, cascade = {CascadeType.MERGE})
+    @OneToOne( fetch = FetchType.LAZY, cascade = {CascadeType.MERGE}, orphanRemoval = true)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinTable(name = "account_user",
             joinColumns =

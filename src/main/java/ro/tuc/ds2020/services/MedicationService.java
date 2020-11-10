@@ -61,13 +61,6 @@ public class MedicationService {
         LOGGER.debug("Medication with id {} was deleted from the db", id);
     }
 
-    public Integer insert(MedicationDTO medicationDTO) {
-        Medication medication = MedicationBuilder.toEntity(medicationDTO);
-        medication = medicationRepository.save(medication);
-        LOGGER.debug("Medication with id {} was inserted in db", medication.getId());
-        return medication.getId();
-    }
-
     public MedicationDTO update(MedicationDTO medicationDTO, Integer medicationId){
 
         Optional<Medication> medicationOptional = medicationRepository.findById(medicationId);
@@ -81,5 +74,14 @@ public class MedicationService {
         medicationRepository.save(medication);
         return medicationDTO;
     }
-    
+
+    public Integer insert(MedicationDTO medicationDTO) {
+        Medication medication = MedicationBuilder.toEntity(medicationDTO);
+        medication = medicationRepository.save(medication);
+        LOGGER.debug("Medication with id {} was inserted in db", medication.getId());
+        return medication.getId();
+    }
+
+
+
 }

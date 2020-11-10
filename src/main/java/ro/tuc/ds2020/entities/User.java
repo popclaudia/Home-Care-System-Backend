@@ -1,6 +1,8 @@
 package ro.tuc.ds2020.entities;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -31,9 +33,13 @@ public class User implements Serializable {
     @Column(name = "address", nullable = false)
     private String address;
 
-//    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY,  cascade = CascadeType.MERGE)
-   // @PrimaryKeyJoinColumn
+    @Column(name="DTYPE", nullable=false, updatable=false, insertable=false)
+    private String userType;
+
+    //    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY,  cascade = CascadeType.ALL, orphanRemoval = true)
+    // @PrimaryKeyJoinColumn
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private UserAccount user_account;
 
     public User(){
@@ -44,6 +50,11 @@ public class User implements Serializable {
         this.birth_date = birth_date;
         this.gender = gender;
         this.address = address;
+    }
+
+    @Transient
+    public String getDecriminatorValue() {
+        return "Super";
     }
 
     public Integer getID() {
@@ -84,6 +95,10 @@ public class User implements Serializable {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getUserType(){
+        return this.userType;
     }
 
     public UserAccount getUser_account() {

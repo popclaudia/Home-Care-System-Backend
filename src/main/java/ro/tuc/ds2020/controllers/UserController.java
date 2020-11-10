@@ -35,4 +35,11 @@ public class UserController {
         UserPrivateDTO dto = userService.findUserById(userId);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
+
+    @GetMapping(value = "/get/{username}/{password}")
+    public ResponseEntity<UserPrivateDTO> getUserN(@PathVariable("username") String user, @PathVariable("password") String password) {
+        UserPrivateDTO dto = userService.findUserByUsername(user, password);
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
 }

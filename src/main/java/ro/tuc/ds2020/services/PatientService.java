@@ -6,9 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.tuc.ds2020.controllers.handlers.exceptions.model.ResourceNotFoundException;
 import ro.tuc.ds2020.dtos.PatientDTO;
+import ro.tuc.ds2020.dtos.UserDTO;
 import ro.tuc.ds2020.dtos.builders.PatientBuilder;
+import ro.tuc.ds2020.dtos.builders.UserBuilder;
 import ro.tuc.ds2020.entities.CareGiver;
 import ro.tuc.ds2020.entities.Patient;
+import ro.tuc.ds2020.entities.UserAccount;
+import ro.tuc.ds2020.repositories.AccountRepository;
 import ro.tuc.ds2020.repositories.CaregiverRepository;
 import ro.tuc.ds2020.repositories.PatientRepository;
 
@@ -22,11 +26,13 @@ public class PatientService {
     private static final Logger LOGGER = LoggerFactory.getLogger(PatientService.class);
     private final PatientRepository patientRepository;
     private final CaregiverRepository caregiverRepository;
+    private final AccountRepository accountRepository;
 
     @Autowired
-    public PatientService(PatientRepository patientRepository, CaregiverRepository caregiverRepository) {
+    public PatientService(PatientRepository patientRepository, CaregiverRepository caregiverRepository,  AccountRepository accountRepository) {
         this.caregiverRepository = caregiverRepository;
         this.patientRepository = patientRepository;
+        this.accountRepository = accountRepository;
     }
 
     public List<PatientDTO> findPatients() {
@@ -43,7 +49,7 @@ public class PatientService {
     }
 
     public PatientDTO findPatientById(Integer id) {
-        Optional<Patient> prosumerOptional = patientRepository.findById(id);
+        Optional<Patient> prosumerOptional = patientRepository.findByIdd(id);
 //        List<MedicationPlan> list = prosumerOptional.get().getMedication_plan();
 //        for(MedicationPlan i: list)
 //            System.out.println(i.getID());
@@ -55,7 +61,7 @@ public class PatientService {
     }
 
     public void delete(Integer id) {
-        Optional<Patient> patientOptional = patientRepository.findById(id);
+        Optional<Patient> patientOptional = patientRepository.findByIdd(id);
         if (!patientOptional.isPresent()) {
             LOGGER.error("Patient with id {} doesn't exist in DB", id);
             throw new ResourceNotFoundException(Patient.class.getSimpleName() + " with id: " + id);
@@ -65,10 +71,19 @@ public class PatientService {
     }
 
     public Integer insert(PatientDTO patientDTO) {
-
         CareGiver caregiver = getCaregiver(patientDTO);
         Patient patient = PatientBuilder.toEntity(patientDTO, caregiver);
         patient = patientRepository.save(patient);
+
+        UserDTO account=new UserDTO();
+        account.setUsername(patientDTO.getName());
+        account.setPassword("patient");
+        account.setUser(patient.getID());
+        UserAccount cont = UserBuilder.toEntity(account, patient);
+        patient.setUser_account(cont);
+        cont = accountRepository.save(cont);
+        patient = patientRepository.save(patient);
+
         LOGGER.debug("Patient with id {} was inserted in db", patient.getID());
         return patient.getID();
 
@@ -76,7 +91,7 @@ public class PatientService {
 
     public PatientDTO update(PatientDTO patientDTO, Integer patientId){
 
-        Optional<Patient> patientOptional = patientRepository.findById(patientId);
+        Optional<Patient> patientOptional = patientRepository.findByIdd(patientId);
         if (!patientOptional.isPresent()) {
             LOGGER.error("Patient with id {} doesn't exist in DB", patientId);
             throw new ResourceNotFoundException(Patient.class.getSimpleName() + " with id: " + patientId);
@@ -90,7 +105,7 @@ public class PatientService {
     }
 
     public void updateCaregiver(Integer caregiverId, Integer patientId){
-        Optional<Patient> patientOptional = patientRepository.findById(patientId);
+        Optional<Patient> patientOptional = patientRepository.findByIdd(patientId);
         if (!patientOptional.isPresent()) {
             LOGGER.error("Patient with id {} doesn't exist in DB", patientId);
             throw new ResourceNotFoundException(Patient.class.getSimpleName() + " with id: " + patientId);

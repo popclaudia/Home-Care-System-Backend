@@ -2,10 +2,7 @@ package ro.tuc.ds2020.entities;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;

@@ -10,13 +10,14 @@ public class UserPrivateDTO extends RepresentationModel<UserPrivateDTO> {
     private Integer id;
     @NotNull
     private String username;
-
+    private String role;
     private Integer user;
 
-    public UserPrivateDTO(Integer id, String username, Integer user) {
+    public UserPrivateDTO(Integer id, String username, Integer user, String role) {
         this.user = user;
         this.username = username;
         this.id = id;
+        this.role = role;
     }
 
     public Integer getUser() {
@@ -43,6 +44,14 @@ public class UserPrivateDTO extends RepresentationModel<UserPrivateDTO> {
         this.username = username;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,11 +59,12 @@ public class UserPrivateDTO extends RepresentationModel<UserPrivateDTO> {
         UserPrivateDTO that = (UserPrivateDTO) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(username, that.username) &&
+                Objects.equals(role, that.role) &&
                 Objects.equals(user, that.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, user);
+        return Objects.hash(id, username, role, user);
     }
 }

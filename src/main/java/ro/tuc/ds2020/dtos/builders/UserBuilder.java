@@ -12,13 +12,12 @@ public class UserBuilder {
     }
 
     public static UserPrivateDTO toUserPrivateDTO(UserAccount user) {
-        return new UserPrivateDTO(user.getId(), user.getUsername(), user.getUser().getID());
+        return new UserPrivateDTO(user.getId(), user.getUsername(), user.getUser().getID(), user.getUser().getUserType());
     }
 
     public static UserAccount toEntity(UserDTO user, User u) {
-        System.out.println(user.getUser()+"***********************************");
         return new UserAccount( user.getUsername(), user.getPassword(), u);
     }
-    
-    
+
+
 }

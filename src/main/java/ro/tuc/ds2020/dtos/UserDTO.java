@@ -15,6 +15,10 @@ public class UserDTO extends RepresentationModel<UserDTO> {
 
     private Integer user;
 
+    public UserDTO(){
+
+    }
+
     public UserDTO(Integer id, String username, String password, Integer user) {
         this.user = user;
         this.password= password;

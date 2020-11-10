@@ -6,9 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.tuc.ds2020.controllers.handlers.exceptions.model.ResourceNotFoundException;
 import ro.tuc.ds2020.dtos.CaregiverDTO;
+import ro.tuc.ds2020.dtos.UserDTO;
 import ro.tuc.ds2020.dtos.builders.CaregiverBuilder;
+import ro.tuc.ds2020.dtos.builders.UserBuilder;
 import ro.tuc.ds2020.entities.CareGiver;
 import ro.tuc.ds2020.entities.Patient;
+import ro.tuc.ds2020.entities.UserAccount;
+import ro.tuc.ds2020.repositories.AccountRepository;
 import ro.tuc.ds2020.repositories.CaregiverRepository;
 import ro.tuc.ds2020.repositories.PatientRepository;
 
@@ -21,11 +25,13 @@ public class CaregiverService {
     private static final Logger LOGGER = LoggerFactory.getLogger(CaregiverService.class);
     private final CaregiverRepository caregiverRepository;
     private final PatientRepository patientRepository;
+    private final AccountRepository accountRepository;
 
     @Autowired
-    public CaregiverService(CaregiverRepository caregiverRepository,PatientRepository patientRepository ) {
+    public CaregiverService(CaregiverRepository caregiverRepository,PatientRepository patientRepository, AccountRepository accountRepository ) {
         this.caregiverRepository = caregiverRepository;
         this.patientRepository = patientRepository;
+        this.accountRepository = accountRepository;
     }
 
     public List<CaregiverDTO> findCaregivers() {
@@ -72,6 +78,15 @@ public class CaregiverService {
 //        for(Patient p: caregiver.getPatients()){
 //            System.out.println(p.getName());
 //        }
+        caregiver = caregiverRepository.save(caregiver);
+
+        UserDTO account=new UserDTO();
+        account.setUsername(caregiverDTO.getName());
+        account.setPassword("caregiver");
+        account.setUser(caregiver.getID());
+        UserAccount cont = UserBuilder.toEntity(account, caregiver);
+        caregiver.setUser_account(cont);
+        cont = accountRepository.save(cont);
         caregiver = caregiverRepository.save(caregiver);
         LOGGER.debug("Caregiver with id {} was inserted in db", caregiver.getID());
         return caregiver.getID();
