@@ -12,11 +12,11 @@ RUN ls -l /root
 FROM openjdk:11.0.6-jre
 
 ENV TZ=UTC
-ENV DB_IP=ec2-52-48-65-240.eu-west-1.compute.amazonaws.com
+ENV DB_IP=ec2-54-228-250-82.eu-west-1.compute.amazonaws.com
 ENV DB_PORT=5432
-ENV DB_USER=wlryktxyqpyomt
-ENV DB_PASSWORD=bee98a2afc7f0c3bcdd7df60ee7278ec5fa5cb4fb06a4039b1ffb1107d5851fd
-ENV DB_DBNAME=devidei2vqv0v4
+ENV DB_USER=oiotwhapqdhxjt
+ENV DB_PASSWORD=326a90f16888d5c58f906f273c5bc332907ec782abfe47be7245eb3742d84ba4t
+ENV DB_DBNAME=d8nbomk4f5q9gf
 
 
 COPY --from=builder /root/dependencies/ ./
