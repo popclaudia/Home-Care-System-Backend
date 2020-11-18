@@ -8,9 +8,9 @@ import ro.tuc.ds2020.controllers.handlers.exceptions.model.ResourceNotFoundExcep
 import ro.tuc.ds2020.dtos.UserDTO;
 import ro.tuc.ds2020.dtos.UserPrivateDTO;
 import ro.tuc.ds2020.dtos.builders.UserBuilder;
-import ro.tuc.ds2020.entities.Patient;
 import ro.tuc.ds2020.entities.User;
 import ro.tuc.ds2020.entities.UserAccount;
+import ro.tuc.ds2020.receiver.MessageReceiver;
 import ro.tuc.ds2020.repositories.UserRepository;
 import ro.tuc.ds2020.repositories.AccountRepository;
 
@@ -49,7 +49,13 @@ public class UserService {
         }
         User user = prosumerOptional.get().getUser();
         String role=user.getUserType();
-
+        new Thread(() -> {
+            try {
+                MessageReceiver.main(new String[]{});
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
         return UserBuilder.toUserPrivateDTO(prosumerOptional.get());
     }
 
