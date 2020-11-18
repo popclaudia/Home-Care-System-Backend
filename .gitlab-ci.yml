@@ -40,7 +40,7 @@ variables:
     DB_USER: oiotwhapqdhxjt
     DB_PASSWORD: 326a90f16888d5c58f906f273c5bc332907ec782abfe47be7245eb3742d84ba4
     DB_DBNAME: d8nbomk4f5q9gf
-    
+     
 variables:
     APP_NAME: spring-assignment-1
     
