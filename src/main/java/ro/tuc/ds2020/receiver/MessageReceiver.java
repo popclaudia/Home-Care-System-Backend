@@ -11,10 +11,16 @@ import ro.tuc.ds2020.entities.Activity;
 public class MessageReceiver {
 
     private final static String QUEUE_NAME = "rabbit";
+    private final static String HOST_NAME = "roedeer.rmq.cloudamqp.com";
+    private final static String HOST_PASS = "jSFPwZod7dGTKQ5V-Ex8zEKdxAxuNAMd";
+    private final static String HOST_USER = "pnwczjmz";
 
     public static void main(String [] args) throws Exception {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
+        factory.setUsername(HOST_USER);
+        factory.setPassword(HOST_PASS);
+        factory.setHost(HOST_NAME);
+        factory.setVirtualHost(HOST_USER);
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
         MessageHandler mh = new MessageHandler();
