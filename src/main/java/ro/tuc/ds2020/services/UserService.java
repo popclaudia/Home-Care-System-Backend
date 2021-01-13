@@ -55,6 +55,7 @@ public class UserService implements UserDetailsService {
         new Thread(() -> {
             try {
                 MessageReceiver.main(new String[]{});
+                System.out.println("Consumer started!");
             } catch (Exception e) {
                 e.printStackTrace();
             }
