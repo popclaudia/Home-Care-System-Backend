@@ -56,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         System.out.println("*********************************13");
         httpSecurity.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/user/login", "/activity", "/notify/**").permitAll()
+                .antMatchers("/user/login", "/activity", "/notify/**", "/doctor", "/doctor/**").permitAll()
                 .antMatchers("/medication", "/patient", "/caregiver", "/medicationplan", "/medication/**", "/caregiver/**").hasRole("DOCTOR")
                 .antMatchers("/patient/caregiver/**").hasAnyRole("CAREGIVER")
                 .antMatchers("/medicationplan/patient/**").hasAnyRole("PATIENT", "DOCTOR")
