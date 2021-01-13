@@ -3,6 +3,9 @@ package ro.tuc.ds2020.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ro.tuc.ds2020.controllers.handlers.exceptions.model.ResourceNotFoundException;
 import ro.tuc.ds2020.dtos.UserDTO;
@@ -17,7 +20,7 @@ import ro.tuc.ds2020.repositories.AccountRepository;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
     private final AccountRepository accountRepository;
@@ -56,6 +59,7 @@ public class UserService {
                 e.printStackTrace();
             }
         }).start();
+
         return UserBuilder.toUserPrivateDTO(prosumerOptional.get());
     }
 
@@ -78,4 +82,14 @@ public class UserService {
 
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<UserAccount> prosumerOptional = accountRepository.findByUsername(username);
+        if (!prosumerOptional.isPresent()) {
+            LOGGER.error("User with username {} was not found in db", username);
+            throw new ResourceNotFoundException(User.class.getSimpleName() + " with username: " + username);
+        }
+
+        return UserBuilder.toUserPrivateDTO(prosumerOptional.get());
+    }
 }
