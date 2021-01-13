@@ -28,7 +28,7 @@ public class MessageHandler {
     WebSocketClient client = new StandardWebSocketClient();
     WebSocketStompClient stompClient = new WebSocketStompClient(client);
     StompSessionHandler sessionHandler = new MySessionHandler();
-    String loggerServerQueueUrl= "ws://localhost:8080/notify";
+    String loggerServerQueueUrl= "ws://spring-assignment-1.herokuapp.com//notify";
     StompSession stompSession = null;
     Integer caregiver = null;
 
