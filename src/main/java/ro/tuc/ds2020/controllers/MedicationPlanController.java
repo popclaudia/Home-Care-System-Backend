@@ -18,7 +18,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/medicationplan")
+@RequestMapping(value = "/api/medicationplan")
 public class MedicationPlanController {
 
     private final MedicationPlanService medicationPlanService;
