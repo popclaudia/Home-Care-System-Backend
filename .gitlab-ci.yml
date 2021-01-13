@@ -50,7 +50,7 @@ deploy:
     - docker:dind
   stage: deploy
   only:
-    - docker_production
+    - docker_production_final_project
   script:
     - docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
     - docker pull $CI_REGISTRY_IMAGE:latest
