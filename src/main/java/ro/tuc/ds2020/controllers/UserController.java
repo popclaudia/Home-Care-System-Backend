@@ -23,7 +23,7 @@ import java.util.Objects;
 
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/api/user")
 public class UserController {
 
     private final UserService userService;
