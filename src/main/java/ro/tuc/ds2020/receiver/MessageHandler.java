@@ -45,7 +45,7 @@ public class MessageHandler {
 
     public void persistActivity(Activity activity) throws IOException {
 
-        URL url = new URL ("http://localhost:8080/activity");
+        URL url = new URL ("https://spring-assignment-1.herokuapp.com/activity");
         HttpURLConnection con = (HttpURLConnection)url.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty("Content-Type", "application/json; utf-8");
